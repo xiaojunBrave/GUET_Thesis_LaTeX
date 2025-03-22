@@ -51,25 +51,26 @@
         {./Pictures/Chapter5/}
 }                                                                           % 图片所在位置，根据需求进行修改
 \ThesisBibResource{./References/reference.bib}                              % 参考文献数据源加载
-\ThesisAchResource{./References/accomplish.bib}                             % 攻读学位期间取得成果数据源加载
+\ThesisAchResource{./References/accomplish.bib}           
+\usepackage{placeins}                   % 攻读学位期间取得成果数据源加载
 
 % ------------------------------------------------------------------------------------------
 %     封面信息
 % ------------------------------------------------------------------------------------------
 
 \Title{                                                                     % 题目{中文}{英文}  
-    基于嵌入式散热模块的微通道散热技术研究
+    手眼协同的机械臂精准授粉技术研究
 }{
-    Research on microchannel heat dissipation technology \\& based on embedded heat dissipation module
+    Research on Precision Pollination Techniques \\&Based on Hand-Eye Coordination for Robotic Arms
     }                                                                       % 标题中插入“\\&”命令进行换行
-\Author{焱铭}                                                               % 作者姓名
-\Advisor{李某某}                                                             % 导师姓名
+\Author{肖俊}                                                               % 作者姓名
+\Advisor{陈金龙}                                                             % 导师姓名
 \Protitle{教授}                                                              % 导师职称
-\School{机电工程学院}                                                        % 所在学院
-\Major{机械工程}                                                             % 学科专业或领域
-\ResearchDirection{电子器件散热}                                             % 研究领域（盲审用）
+\School{计算机与信息安全学院}                                                        % 所在学院
+\Major{计算机技术}                                                             % 学科专业或领域
+\ResearchDirection{图像处理}                                             % 研究领域（盲审用）
 \DegreeCategories{工学硕士}                                                  % 申请学位门类或类别
-\StudentNumber{2020XXX}                                                     % 学号
+\StudentNumber{22032303110}                                                     % 学号
 \Secrets{}                                                                  % 密级，不涉密请空着
 \Date{\today}                                                               % 可更换为具体日期如：\date{2023年5月28日}
 
@@ -96,7 +97,9 @@
     \input{Chapters/Symbol}                                                % 符号定义文件
 
     \input{Chapters/Chapter1}
-    \input{Chapters/Chapter2}
+    \input{Chapters/Chapter2_1}
+    %\input{Chapters/Chapter2}
+    \input{Chapters/Chapter3_1}
     \input{Chapters/Chapter3}
     \input{Chapters/Chapter4}
     \input{Chapters/Chapter5}                                              % 可根据需求自行添加章节数
