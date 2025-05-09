@@ -27,22 +27,36 @@
 
 
 \begin{ChineseAbstract}
-    LaTeX利用设置好的模板，可以编译为格式统一的pdf。目前国内大多出版社与高校仍在使用word，word由于其强大的功能与灵活性，在新手面对形式固定的论文时，排版、编号、参考文献等简单事务反而会带来很多困难与麻烦，对于一些需要通篇修改的问题，要想达到LaTeX的效率，对word使用者来说需要具有较高的技能水平。
+  随着农业自动化与精准作业需求的持续增长，温室环境下的机器人授粉技术逐渐成为研究热点。然而，受限于花朵姿态不规则、背景干扰复杂以及机械臂操作刚性强等因素，实现高精度的自主授粉仍是一个难题。为此，本文提出一种基于手眼协同的机械臂精准授粉方法，构建了一个自主授粉系统，集成了花朵智能感知、位姿重建、柔顺控制及末端误差补偿等关键模块。主要研究工作包括：
+  
+  （1）目标感知方面：针对花朵检测难、实例分割精度低的问题，本文对比分析了Mask R-CNN与YOLACT两种深度实例分割网络，在自建数据集上进行训练，并系统评估其在不同光照与遮挡条件下的分割精度、推理速度及鲁棒性。
+  
+  （2）位姿估计方面：针对目标位姿难以准确获取的问题，本文在完成目标检测与分割的基础上，提出了一种融合对称空间信息的三维位姿重建方法。该方法结合深度图去噪、三维坐标计算与手眼标定技术，实现了对目标花朵空间位置与姿态的高精度估计。
+  
+  （3）柔顺控制方面：为提升机械臂在授粉过程中的可达性与安全性，设计了一种“粗到精”两阶段的视觉伺服控制策略，并引入三次样条插值算法生成连续、平滑的关节空间轨迹，从而显著提高了操作的柔顺性与稳定性。
+  
+  （4）误差补偿方面：针对实际操作中存在的末端定位误差，进一步提出一种基于Transformer架构的视觉误差预测网络，能够实时估计授粉末端与目标之间的平移与旋转误差。实验结果表明，该方法在平移误差方面的精度提升了46.47\%，平均单花授粉效率提升了50.9\%。
+  
+  在面向多目标番茄花的连续授粉实验中，系统达成了86.19\%的授粉成功率，验证了所提出方法在复杂温室农业环境下的高效性与实用性。
+   
+    
 
-    为了能把主要精力放在论文撰写上，许多国际期刊和高校都支持LaTeX的撰写与提交，新手不需要关心格式问题，只需要按部就班的使用少数符号标签，即可得到符合要求的文档。且在需要全篇格式修改时，更换或修改模板文件，即可直接重新编译为新的样式文档，这对于word新手使用word的感受来说是不可思议的。
-    此项目提供用于排版桂林电子科技大学本硕博(非全，在职)毕业论文(设计)LaTeX模板类，旨在帮助桂林电子科技大学的毕业生高效地完成毕业论文的写作。
-
-\ChineseKeyword{桂林电子科技大学；本硕博学位论文；\LaTeX 模板类}
+\ChineseKeyword{精准授粉；手眼协同；柔顺控制；误差估计；}
 \end{ChineseAbstract}
 
 
 \begin{EnglishAbstract}
-    LaTeX can be compiled into a pdf of uniform format using the set template.At present, most domestic publishers and universities still use word. Because of its powerful function and flexibility, when faced with fixed-form papers by novices, simple matters such as typesetting, numbering, and reference documents will bring many difficulties and troubles. For some problems that need to be modified throughout, to achieve the efficiency of LaTeX, it requires a high level of skill for word users.
+With the growing demand for agricultural automation and precision operations, robotic pollination in greenhouse environments has emerged as a research hotspot. However, achieving high-precision autonomous pollination remains a significant challenge due to factors such as irregular flower postures, complex background interference, and the inherent rigidity of robotic manipulators. To address these issues, this thesis proposes a vision-guided robotic pollination method based on hand–eye coordination and develops an autonomous pollination system that integrates key modules including intelligent floral perception, pose estimation, soft motion control, and end-effector error compensation. The main contributions are as follows:
 
-    In order to focus on the writing of papers, many international journals and universities support the writing and submission of LaTeX. Novices don't need to care about formatting issues. They only need to use a few symbolic labels step by step to get the documents that meet the requirements. And when you need to modify the entire format, you can directly recompile the template file by replacing or modifying the template file. This is incredible for the word novice to use the word.
+(1) Floral perception: To tackle the difficulties of flower detection and the low accuracy of instance segmentation in agricultural scenarios, this study compares two state-of-the-art deep instance segmentation networks—Mask R-CNN and YOLACT. Their performance is systematically evaluated under varying lighting and occlusion conditions in terms of segmentation accuracy, inference speed, and robustness.
 
-    This project provides the LaTeX template class for typesetting the graduation thesis (design) of Guilin University of Electronic Science and Technology, aiming to help graduates of Guilin University of Electronic Science and Technology efficiently complete the writing of their graduation thesis.
+(2) Pose estimation: To address the difficulty in accurately acquiring flower poses, a 3D pose reconstruction method that incorporates symmetry-aware spatial constraints is proposed. By combining depth map denoising, 3D coordinate computation, and hand–eye calibration, the method achieves high-precision estimation of the spatial position and orientation of target flowers.
 
+(3) Soft control: To improve the reachability and operational safety of the robotic arm during pollination, a two-stage "coarse-to-fine" visual servoing strategy is designed. Additionally, cubic spline interpolation is used to generate continuous and smooth joint-space trajectories, significantly enhancing the compliance and stability of the robotic motion.
 
-\EnglishKeyword{GUET; Common template; \LaTeX;}
+(4) Error compensation: To address end-effector positioning errors during operation, a vision-based error prediction network based on the Transformer architecture is introduced. This model enables real-time estimation of translational and rotational deviations between the end-effector and the target. Experimental results show a 46.47\% improvement in translational accuracy and a 50.9\% increase in average single-flower pollination efficiency.
+
+In multi-target tomato flower pollination experiments, the system achieved a pollination success rate of 86.19\%, demonstrating the effectiveness and practicality of the proposed method in complex greenhouse environments.
+
+\EnglishKeyword{precision pollination;hand-eye coordination;soft control;offset error estimation;}
 \end{EnglishAbstract}

@@ -12,7 +12,7 @@
 \subsection{末端误差建模}
 \begin{figure}[htb]
 	\includegraphics[width=1 \textwidth]{error}
-	\caption[授粉实验结果主要指标对比]{柔顺控制实验结果主要指标对比} % 中括号中内容为插图索引中显示内容，可在题注内容过长时使用
+	\caption[不同位置构建的笛卡尔坐标系]{不同位置构建的笛卡尔坐标系} % 中括号中内容为插图索引中显示内容，可在题注内容过长时使用
 	\label{fig:effective1}
 \end{figure}
 
@@ -145,23 +145,25 @@ $TE$ 的单位为厘米（cm），表示预测平移误差与实际平移误差�
 
 
 \begin{table}[htbp]
+	\centering
 	\caption[数据集中不同方向花朵图像的数量统计]{数据集中不同方向花朵图像的数量统计}
-	\setlength{\tabcolsep}{16mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{lcc}
-			\toprule
-			\textbf{方向}	& \textbf{图像数量} & \textbf{占比（\%）}\\
-			\midrule
-			L		& 261  	& 20.6\\
-			R		& 274	& 21.7\\
-			F		& 230	& 18.2\\
-			U		& 256	& 20.3\\
-			D		& 243   & 19.2\\
-			\bottomrule
-	\end{tabular}}
+	\begin{tabularx}{\textwidth}{YYY}
+		\toprule
+		\textbf{方向} & \textbf{图像数量} & \textbf{占比（\%）} \\
+		\midrule
+		L & 261 & 20.6 \\
+		R & 274 & 21.7 \\
+		F & 230 & 18.2 \\
+		U & 256 & 20.3 \\
+		D & 243 & 19.2 \\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:effective_r_1}
 	
-	\noindent{\footnotesize{其中 “F”、“L”、“R”、“U” 和 “D” 分别表示前方、左侧、右侧、上方与下方。}}
+	\vspace{1mm}
+	\noindent{\footnotesize 其中 “F”、“L”、“R”、“U” 和 “D” 分别表示前方、左侧、右侧、上方与下方。}
 \end{table}
+
 
 为保证模型输入数据的一致性，首先将机械臂末端相机采集的所有图像统一调整为 $(224 \times 224)$ 的分辨率。随后，对图像进行了归一化处理，将像素值缩放至 $[0, 1]$ 区间，以提升模型训练的稳定性。此外，为增强数据多样性并缓解过拟合问题，应用了包括缩放、裁剪和色彩变换等在内的数据增强策略。
 
@@ -196,7 +198,7 @@ $TE$ 的单位为厘米（cm），表示预测平移误差与实际平移误差�
 
 \begin{figure}[htb]
 	\includegraphics[width=1 \textwidth]{train.png}
-	\caption[模型训练过程中损失值（Loss）、平移误差（$TE$）与旋转误差（$RE$）的变化曲线]{模型训练过程中损失值（Loss）、平移误差（$TE$）与旋转误差（$RE$）的变化曲线} % 中括号中内容为插图索引中显示内容，可在题注内容过长时使用
+	\caption[模型训练过程中的变化曲线]{模型训练过程中损失值（Loss）、平移误差（$TE$）与旋转误差（$RE$）的变化曲线} % 中括号中内容为插图索引中显示内容，可在题注内容过长时使用
 	\label{fig:effective_r_3}
 \end{figure}
 
@@ -213,21 +215,20 @@ $TE$ 的单位为厘米（cm），表示预测平移误差与实际平移误差�
 
 
 \begin{table}[htbp]
-	\caption[数据集中不同方向花朵图像的数量统计]{数据集中不同方向花朵图像的数量统计}
-	\setlength{\tabcolsep}{10mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{lccc}
-			\toprule
-			\textbf{方向}	& \textbf{平移误差 TE} & \textbf{旋转误差 RE}  & \textbf{检测速度 FPS}\\
-			\midrule
-			L	& 0.82	& 0.0049 	& 41\\
-			R	& 0.82	& 0.0049	& 42\\
-			F	& 0.78	& 0.0047	& 43\\
-			U		& 0.80	& 0.0048	& 42\\
-			D		& 0.87 & 0.0051	& 41\\
-			\bottomrule
-	\end{tabular}}
+	\centering
+	\caption[模型在不同方向上花朵的实验结果]{模型在不同方向上花朵的实验结果}
+	\begin{tabularx}{\textwidth}{YYYY}
+		\toprule
+		\textbf{方向} & \textbf{平移误差 TE} & \textbf{旋转误差 RE} & \textbf{检测速度 FPS} \\
+		\midrule
+		L & 0.82 & 0.0049 & 41 \\
+		R & 0.82 & 0.0049 & 42 \\
+		F & 0.78 & 0.0047 & 43 \\
+		U & 0.80 & 0.0048 & 42 \\
+		D & 0.87 & 0.0051 & 41 \\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:effective_r_3}
-	
 	\noindent{\footnotesize{方向 “F”、 “L”、 “R”、 “U” 和 “D” 分别表示前方、左侧、右侧、上方与下方。}}
 \end{table}
 
@@ -242,92 +243,89 @@ $TE$ 的单位为厘米（cm），表示预测平移误差与实际平移误差�
 如\cref{tab:effective_r_4} 所示，加入该“精调定位”步骤后，授粉末端与目标之间的误差显著缩小，为后续伺服授粉步骤减少了搜索范围。实验显示，伺服过程时间从12.7秒缩短至3.1秒，平均成功率达到86.19\%，授粉成功率保持一致。\cref{tab:effective_r_5} 显示我们方法将末端平均定位误差缩小至0.81 cm，精度提升达46.67\%，旋转误差为0.0049，平均单花授粉效率提升达50.9\%。
 
 \begin{table}[htbp]
-	\caption[数据集中不同方向花朵图像的数量统计]{数据集中不同方向花朵图像的数量统计}
-	\setlength{\tabcolsep}{10mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{lcc}
-			\toprule
-			\textbf{步骤}	& \textbf{baseline 耗时（秒）}	& \textbf{本方法耗时（秒）}     \\
-			\midrule
-			花朵检测	& 0.0928			& 0.0927		\\
-			柱头识别   & 0.025			& 0.024			\\
-			位置计算（含运动）    & 1.8			& 1.8			\\
-			接近花朵（含运动）   & 4.2			& 4.2			\\
-			\textcolor{red}{精调定位}   & /			& 0.024			\\
-			伺服授粉（含运动）   & 12.7			&\textcolor{red}{3.1}			\\
-			\bottomrule
-	\end{tabular}}
+	\centering
+	\caption[本方法引入前后授粉系统各步骤平均耗时比较]{本方法引入前后授粉系统各步骤平均耗时比较}
+	\begin{tabularx}{\textwidth}{YYY}
+		\toprule
+		\textbf{步骤}	& \textbf{baseline 耗时（秒）}	& \textbf{本方法耗时（秒）}     \\
+		\midrule
+		花朵检测	& 0.0928			& 0.0927		\\
+		柱头识别   & 0.025			& 0.024			\\
+		位置计算（含运动）    & 1.8			& 1.8			\\
+		接近花朵（含运动）   & 4.2			& 4.2			\\
+		\textcolor{red}{精调定位}   & /			& 0.024			\\
+		伺服授粉（含运动）   & 12.7			& \textcolor{red}{3.1}			\\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:effective_r_4}
 	
-	\noindent{\footnotesize{“微调位置 "步骤是一个额外步骤。增加这一步骤，“伺服 ”步骤所花费的时间就会大大减少，只需 3.1 秒就能达到相同的授粉成功率。}}
+	\noindent{\footnotesize{“精调定位"步骤是一个额外步骤。增加这一步骤，“伺服”步骤所花费的时间就会大大减少，只需 3.1 秒就能达到相同的授粉成功率。}}
 \end{table}
 \begin{table}[H]
+	\centering
 	\caption[本方法与对照方法在不同方向花朵上的误差与耗时对比]{本方法与对照方法在不同方向花朵上的误差与耗时对比}
-	\setlength{\tabcolsep}{10mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{ccccc}
-			\toprule
-			\textbf{方向}	& \textbf{方法}	& \textbf{TE}     & \textbf{RE} & \textbf{耗时（秒）}\\
-			\midrule
-			\multirow[m]{2}{*}{L}	& baseline			& 1.53			& / & 18.78\\
-			& 本方法			& 0.82			& 0.0050 & 9.22\\
-			\midrule
-			\multirow[m]{2}{*}{R}    & baseline			& 1.52			& / & 18.80\\
-			& 本方法			& 0.82			& 0.0050 & 9.23\\
-			\midrule
-			\multirow[m]{2}{*}{F}    & baseline			& 1.48			& / & 18.85\\
-			& 本方法			& 0.80			& 0.0048 & 9.22\\
-			\midrule
-			\multirow[m]{2}{*}{U}   & baseline			& 1.53			& / & 18.79\\
-			& 本方法			& 0.81			& 0.0049 & 9.24\\
-			\midrule
-			\multirow[m]{2}{*}{D}   & baseline			& 1.55			& / & 18.83\\
-			& 本方法			& 0.83			& 0.0052 & 9.26\\
-			\bottomrule
-	\end{tabular}}
+	\begin{tabularx}{\textwidth}{YYYYY}
+		\toprule
+		\textbf{方向}	& \textbf{方法}	& \textbf{TE}     & \textbf{RE} & \textbf{耗时（秒）}\\
+		\midrule
+		\multirow{2}{*}{L}	& baseline			& 1.53			& / & 18.78\\
+		& 本方法			& 0.82			& 0.0050 & 9.22\\
+		\midrule
+		\multirow{2}{*}{R}    & baseline			& 1.52			& / & 18.80\\
+		& 本方法			& 0.82			& 0.0050 & 9.23\\
+		\midrule
+		\multirow{2}{*}{F}    & baseline			& 1.48			& / & 18.85\\
+		& 本方法			& 0.80			& 0.0048 & 9.22\\
+		\midrule
+		\multirow{2}{*}{U}   & baseline			& 1.53			& / & 18.79\\
+		& 本方法			& 0.81			& 0.0049 & 9.24\\
+		\midrule
+		\multirow{2}{*}{D}   & baseline			& 1.55			& / & 18.83\\
+		& 本方法			& 0.83			& 0.0052 & 9.26\\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:effective_r_5}
-	
 	\noindent{\footnotesize{方向“F”、“L”、“R”、“U”与“D”分别代表前、左、右、上与下。没有引入本章方法的授粉机器人为对照方法。}}
 \end{table}
-
 \subsection{消融实验}
 \begin{table}[htbp]
+	\centering
 	\caption[不同主干网络结构与位置编码对模型预测平移与旋转误差精度的影响]{不同主干网络结构与位置编码对模型预测平移与旋转误差精度的影响}
-	\setlength{\tabcolsep}{10mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{cccc}
-			\toprule
-			\textbf{主干网络}	& \textbf{位置编码}	& \textbf{TE（cm）}     & \textbf{RE}\\
-			\midrule
-			\multirow[m]{2}{*}{ResNet50}	& \ding{51}			& 0.81			& 0.0049\\
-			& \ding{55}				& 1.19			& 0.0051\\
-			\midrule
-			\multirow[m]{2}{*}{ResNet18}    & \ding{51}				& 0.92			& 0.0053\\
-			& \ding{55}			& 1.33			& 0.0054\\
-			\midrule
-			\multirow[m]{2}{*}{ResNet101}    & \ding{51}				& 0.86			& 0.0050\\
-			& \ding{55}			& 1.21			& 0.0050\\
-			\midrule
-			\multirow[m]{2}{*}{VGG16}   & \ding{51}				& 0.96			& 0.0053\\
-			& \ding{55}			& 1.32			& 0.0055\\
-			\midrule
-			\multirow[m]{2}{*}{VGG19}   & \ding{51}				& 0.99			& 0.0054\\
-			& \ding{55}			& 1.33			& 0.0055\\
-			\midrule
-			\multirow[m]{2}{*}{DenseNet-121}   & \ding{51}				& 0.92			& 0.0054\\
-			& \ding{55}			& 1.23			& 0.0055\\
-			\midrule
-			\multirow[m]{2}{*}{DenseNet-201}   & \ding{51}				& 1.10			& 0.0055\\
-			& \ding{55}			& 1.38			& 0.0057\\
-			\bottomrule
-	\end{tabular}}
+	\begin{tabularx}{\textwidth}{YYYY}
+		\toprule
+		\textbf{主干网络} & \textbf{位置编码} & \textbf{TE（cm）} & \textbf{RE} \\
+		\midrule
+		\multirow{2}{*}{ResNet50} & \ding{51} & 0.81 & 0.0049 \\
+		& \ding{55} & 1.19 & 0.0051 \\
+		\midrule
+		\multirow{2}{*}{ResNet18} & \ding{51} & 0.92 & 0.0053 \\
+		& \ding{55} & 1.33 & 0.0054 \\
+		\midrule
+		\multirow{2}{*}{ResNet101} & \ding{51} & 0.86 & 0.0050 \\
+		& \ding{55} & 1.21 & 0.0050 \\
+		\midrule
+		\multirow{2}{*}{VGG16} & \ding{51} & 0.96 & 0.0053 \\
+		& \ding{55} & 1.32 & 0.0055 \\
+		\midrule
+		\multirow{2}{*}{VGG19} & \ding{51} & 0.99 & 0.0054 \\
+		& \ding{55} & 1.33 & 0.0055 \\
+		\midrule
+		\multirow{2}{*}{DenseNet-121} & \ding{51} & 0.92 & 0.0054 \\
+		& \ding{55} & 1.23 & 0.0055 \\
+		\midrule
+		\multirow{2}{*}{DenseNet-201} & \ding{51} & 1.10 & 0.0055 \\
+		& \ding{55} & 1.38 & 0.0057 \\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:effective_r_6}
-	
 	\noindent{\footnotesize{表中 \ding{51} 表示该模型使用了位置编码，\ding{55} 表示未使用位置编码。}}
 \end{table}
 \begin{figure}[H]
 	\includegraphics[width=0.6 \textwidth]{result.png}
-	\caption[不同主干网络在是否加入位置编码条件H下的平移误差]{不同主干网络在是否加入位置编码条件下的平移误差} % 中括号中内容为插图索引中显示内容，可在题注内容过长时使用
+	\caption[不同主干网络在是否加入位置编码条件下的平移误差]{不同主干网络在是否加入位置编码条件下的平移误差} % 中括号中内容为插图索引中显示内容，可在题注内容过长时使用
 	\label{fig:effective_r_5}
 \end{figure}
-本研究开展了多组消融实验，以验证不同主干网络结构（Backbone）及位置编码的引入对模型平移偏差误差与旋转姿态偏差误差预测精度的影响。我们选取 ResNet50、ResNet18、ResNet101、VGG16、VGG19、DenseNet-121 与 DenseNet-201 作为特征提取主干网络，并在每个主干结构下分别进行了添加与不添加位置编码的对比实验。
+本研究开展了多组消融实验，以验证不同主干网络结构（Backbone）及位置编码的引入对模型平移偏差误差与旋转姿态偏差误差预测精度的影响。我们选取 ResNet50、ResNet18、ResNet101、VGG16、VGG19\cite{simonyan2014very}、DenseNet-121 与 DenseNet-201\cite{huang2017densely} 作为特征提取主干网络，并在每个主干结构下分别进行了添加与不添加位置编码的对比实验。
 
 实验结果如\cref{tab:effective_r_6} 和\cref{fig:effective_r_5}所示，主干网络结构的选择及是否引入位置编码对模型的最终预测精度具有显著影响。其中，采用 ResNet50 作为主干网络并引入位置编码的模型在平移偏差与旋转姿态偏差预测中表现最优，分别达到 0.81 cm 与 0.0049 的误差。
 

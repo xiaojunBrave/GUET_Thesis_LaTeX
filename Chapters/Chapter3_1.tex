@@ -22,7 +22,7 @@
 	\caption[实例分割Mask-RCNN 框架]{实例分割Mask-RCNN 框架} % 中括号中内容为插图索引中显示内容，可在题注内容过长时使用
 	\label{fig:mask-rcnn}
 \end{figure}
-Mask-RCNN是一种经典的实例分割模型，它是在 Faster-RCNN 目标检测框架的基础上增加了掩膜分割（Mask）分支，使其不仅能够检测目标，还能在像素级别进行分割,如\cref{fig:mask-rcnn}所示。这一特性使得 Mask-RCNN 在花朵检测中具有较高的精度，能够精准地分割出花朵区域，而不受背景影响。在 Mask-RCNN 的模型结构中，首先采用 ResNet-50 或 ResNet-101 作为主干网络，通过卷积神经网络提取图像的高层次特征，并结合特征金字塔网络（FPN, Feature Pyramid Network），增强对不同尺度花朵的检测能力。随后，区域候选网络（RPN, Region Proposal Network）生成候选目标区域，并通过非极大值抑制（NMS, Non-Maximum Suppression）去除冗余的候选框，确保检测的可靠性。最后，ROIAlign 机制用于对目标区域进行精确的特征提取，并通过一个全卷积网络（FCN, Fully Convolutional Network）生成目标的掩膜，实现高精度的实例分割。
+Mask-RCNN\cite{he2017mask}是一种经典的实例分割模型，它是在 Faster-RCNN 目标检测框架的基础上增加了掩膜分割（Mask）分支，使其不仅能够检测目标，还能在像素级别进行分割,如\cref{fig:mask-rcnn}所示。这一特性使得 Mask-RCNN 在花朵检测中具有较高的精度，能够精准地分割出花朵区域，而不受背景影响。在 Mask-RCNN 的模型结构中，首先采用 ResNet-50 或 ResNet-101 作为主干网络，通过卷积神经网络提取图像的高层次特征，并结合特征金字塔网络（FPN, Feature Pyramid Network），增强对不同尺度花朵的检测能力。随后，区域候选网络（RPN, Region Proposal Network）生成候选目标区域，并通过非极大值抑制（NMS, Non-Maximum Suppression）去除冗余的候选框，确保检测的可靠性。最后，ROIAlign 机制用于对目标区域进行精确的特征提取，并通过一个全卷积网络（FCN, Fully Convolutional Network）生成目标的掩膜，实现高精度的实例分割。
 
 Mask-RCNN 在花朵目标分割中的应用表现优异，能够有效应对复杂背景和遮挡问题。然而，由于该模型采用了串行的目标检测和实例分割流程，在计算上开销较大，推理速度相对较慢。在实验环境（NVIDIA GTX 1080 Ti）下，其分割速度约为 5FPS，难以满足实时授粉任务的需求。因此，在实际应用中，若对计算速度要求较高，需要寻找更高效的分割方法，以满足农业机械臂在自动化授粉中的实时性需求。
 
@@ -32,7 +32,7 @@ Mask-RCNN 在花朵目标分割中的应用表现优异，能够有效应对复�
 	\caption[yolact模型架构图]{yolact模型架构图} % 中括号中内容为插图索引中显示内容，可在题注内容过长时使用
 	\label{fig:yolact}
 \end{figure}
-为了解决 Mask-RCNN 在推理速度上的不足，本章引入了 YOLACT（You Only Look At Coefficients, Bolya et al., 2019） 作为优化方案。YOLACT 的核心优势在于 并行执行目标检测和图像分割，避免了 Mask-RCNN 先检测再分割的串行结构，从而大幅提升计算效率。在 YOLACT 的架构中，如\cref{fig:yolact}所示，仍然采用 ResNet-50 或 ResNet-101 作为主干网络，并结合 FPN 提取多尺度特征。在目标检测方面，YOLACT 采用单阶段检测框架，使其可以直接对目标进行分类和定位，而不需要额外的候选区域生成过程。此外，其分割分支通过一个专门的掩膜预测网络，能够在检测的同时进行掩膜预测，使得整个推理过程更加高效。
+为了解决 Mask-RCNN 在推理速度上的不足，本章引入了 YOLACT\cite{bolya2019yolact}作为优化方案。YOLACT 的核心优势在于 并行执行目标检测和图像分割，避免了 Mask-RCNN 先检测再分割的串行结构，从而大幅提升计算效率。在 YOLACT 的架构中，如\cref{fig:yolact}所示，仍然采用 ResNet-50 或 ResNet-101 作为主干网络，并结合 FPN 提取多尺度特征。在目标检测方面，YOLACT 采用单阶段检测框架，使其可以直接对目标进行分类和定位，而不需要额外的候选区域生成过程。此外，其分割分支通过一个专门的掩膜预测网络，能够在检测的同时进行掩膜预测，使得整个推理过程更加高效。
 
 YOLACT 在授粉任务中的应用主要体现在其优异的实时性。相比于 Mask-RCNN，其计算复杂度大幅降低，在相同实验环境下推理速度可达 34FPS，远高于 Mask-RCNN 的 5FPS。这种高效的计算能力使其更加适用于实时授粉任务，尤其是在需要快速识别和分割花朵，以指导机械臂进行柔顺控制的应用场景。然而，YOLACT 在分割精度上相较于 Mask-RCNN 略有下降，尤其是在边缘处理方面可能存在一定的误差。因此，在高精度需求的场景（如授粉过程中需要确保机械臂末端精准对准花蕊）时，Mask-RCNN 依然是更优的选择，而在需要实时响应的场景（如大规模花卉授粉）中，YOLACT 则更加合适
 
@@ -41,25 +41,24 @@ YOLACT 在授粉任务中的应用主要体现在其优异的实时性。相比�
 \subsection{实验环境}
 本章实验的软硬件设备如表下所示：
 \begin{table}[htbp]
+	\centering
 	\caption[目标分割实验环境]{目标分割实验环境}
-	\setlength{\tabcolsep}{14mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{clc}
-			\toprule
-			序号    &  设备    & 型号   \\
-			\midrule
-			1 & realsence相机  & D435i     \\
-			2 & cpu  & intelCorei5-13600     \\
-			3 & 内存 & 32GB   \\
-			4 & 操作系统  & window10    \\
-			5 & 显卡     & NVIDIA GeForce GTX3090 \\
-			6 & 编译语言    & python3.8       \\
-			7 & 深度学习框架    & Pytorch2.4       \\
-			\bottomrule
-	\end{tabular}}
+	\begin{tabularx}{\textwidth}{YYY}
+		\toprule
+		\textbf{序号} & \textbf{设备} & \textbf{型号} \\
+		\midrule
+		1 & RealSense 相机 & D435i \\
+		2 & CPU & Intel Core i5-13600 \\
+		3 & 内存 & 32GB \\
+		4 & 操作系统 & Windows 10 \\
+		5 & 显卡 & NVIDIA GeForce RTX 3090 \\
+		6 & 编程语言 & Python 3.8 \\
+		7 & 深度学习框架 & PyTorch 2.4 \\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:division-of-microchannels}
 \end{table}
 \subsection{数据集}  \label{sec:dataset}
-
 
  \begin{figure}[htb]
 	\includegraphics[width=0.8 \textwidth]{folower.png}
@@ -74,21 +73,22 @@ YOLACT 在授粉任务中的应用主要体现在其优异的实时性。相比�
 
 在数据采集过程中，我们使用了realsence相机，并将其安装在UR5机械臂末端，使其能够随机械臂的运动采集到稳定的图像和深度信息。相机的分辨率设置为 1920×1080（RGB） ，并采用自动曝光，以适应不同的光照环境。在拍摄过程中，相机的采集频率设定为每 0.5 秒拍摄一张图像，每个角度平均获取10 张图像，确保数据的多样性和完整性。
 \begin{table}[htbp]
+	\centering
 	\caption[不同光照条件数据采集]{不同光照条件数据采集}
-	\setlength{\tabcolsep}{14mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{clc}
-			\toprule
-			光照条件    &  采集张数    & 占比 （\%）  \\
-			\midrule
-			正常环境 & 420  & 37.8 \\
-			强光环境 & 238  & 21.4    \\
-			阴影环境 & 210 & 19.0   \\
-			背光环境 & 242  & 21.8    \\
-			总计 & 1110 & 100 \\
-			\bottomrule
-	\end{tabular}}
+	\begin{tabularx}{\textwidth}{YYY}
+		\toprule
+		\textbf{光照条件} & \textbf{采集张数} & \textbf{占比（\%）} \\
+		\midrule
+		正常环境 & 420 & 37.8 \\
+		强光环境 & 238 & 21.4 \\
+		阴影环境 & 210 & 19.0 \\
+		背光环境 & 242 & 21.8 \\
+		总计 & 1110 & 100 \\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:dataset}
 \end{table}
+
 
 经过多次实验和数据收集，我们最终获得了 1110 多张 RGB 图像，并同时存储了其对应的深度图像，采集的数据详细如\cref{tab:dataset}所示。这些数据不仅涵盖了花朵在不同光照、角度下的外观变化，同时也包含了一些叶片遮挡、强光反射、阴影影响等特殊场景，这些额外的因素有助于训练一个更加鲁棒的目标分割模型。为了确保数据质量，我们对数据进行了筛选，去除了模糊、过曝或不完整的图像，并对数据集的类别分布进行了统计分析。
 
@@ -102,23 +102,23 @@ YOLACT 在授粉任务中的应用主要体现在其优异的实时性。相比�
 在实验指标的选择上，我们设定了三个衡量标准。首先，mIoU（mean Intersection over Union）作为分割精度的重要指标，用于衡量模型预测掩膜与真实标注掩膜的重叠程度，mIoU 越高，说明模型分割出的目标区域越精准。除了分割精度，我们还考虑了计算效率（FPS, Frames Per Second），即模型每秒可以处理的帧数，这对于实时授粉任务尤为关键，FPS 值越高，说明模型的推理速度越快。此外，为了测试模型的鲁棒性，我们设计了多种复杂场景，包括光照变化、部分遮挡和严重遮挡等环境，并观察 mIoU 在这些环境下的变化，以评估模型在不同条件下的稳定性。
 
 \subsection{结果与分析} 
-\subsection*{（1）分割精度分析} 
+\subsubsection{分割精度分析} 
 \begin{table}[htbp]
+	\centering
 	\caption[不同光照强度下的 MIoU 结果]{不同光照强度下的 MIoU 结果}
-	\setlength{\tabcolsep}{14mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{clc}
-			\toprule
-			光照强度    &  Mask-RCNN    & YOLACT   \\
-			\midrule
-			正常环境 & 89.7  & 82.3 \\
-			强光环境 & 91.5  & 86.2    \\
-			阴影环境 & 85.3 & 75.8   \\
-			背光环境 & 80.4  & 70.5    \\
-			
-			\bottomrule
-	\end{tabular}}
+	\begin{tabularx}{\textwidth}{YYY}
+		\toprule
+		\textbf{光照强度} & \textbf{Mask-RCNN} & \textbf{YOLACT} \\
+		\midrule
+		正常环境 & 89.7\% & 82.3\% \\
+		强光环境 & 91.5\% & 86.2\% \\
+		阴影环境 & 85.3\% & 75.8\% \\
+		背光环境 & 80.4\% & 70.5\% \\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:miou}
 \end{table}
+
 在测试集上，分别计算了 Mask-RCNN 和 YOLACT 在不同场景下的 mIoU，结果如\cref{tab:miou}所示。
 
 
@@ -126,41 +126,42 @@ YOLACT 在授粉任务中的应用主要体现在其优异的实时性。相比�
 
 相比之下，YOLACT 由于模型结构较轻量，在正常光照下仍能保持较好的分割精度，但在低光照或复杂光照条件下，mIoU 下降更明显，容易出现误分割或目标遗漏。这说明 YOLACT 对光照变化的适应性较差，适用于光照相对均匀的场景，而 Mask-RCNN 在复杂光照条件下依然能提供较稳定的分割效果，适用于更严苛的应用需求。
 
-\subsection*{（2） 计算效率对比} 
+\subsubsection{计算效率对比} 
 \begin{table}[htbp]
+	\centering
 	\caption[不同模型的推理速度]{不同模型的推理速度}
-	\setlength{\tabcolsep}{14mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{cc}
-			\toprule
-			模型    &  平均FPS     \\
-			\midrule
-			Mask-RCNN & 5.3   \\
-			YOLACT & 34.8     \\
-			\bottomrule
-	\end{tabular}}
+	\begin{tabularx}{\textwidth}{YY}
+		\toprule
+		\textbf{模型} & \textbf{平均 FPS} \\
+		\midrule
+		Mask-RCNN & 5.3 \\
+		YOLACT & 34.8 \\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:effective}
 \end{table}
+
 由于 YOLACT 采用了轻量级架构，并行执行目标检测和分割任务，因此在推理速度上明显优于 Mask-RCNN，结果如\cref{tab:effective}所示。
 
 实验表明，YOLACT 的推理速度比 Mask-RCNN 提高了 6.5 倍，能够实现接近实时的目标分割，适用于对计算效率要求较高的机械臂授粉任务。而 Mask-RCNN 由于计算开销较大，推理速度较慢，在实时性要求较高的任务中可能无法满足需求。
 
-\subsection*{（3） 复杂场景适应性} 
+\subsubsection{复杂场景适应性} 
 \begin{table}[htbp]
+	\centering
 	\caption[不同遮挡程度下的 MIoU 结果]{不同遮挡程度下的 MIoU 结果}
-	\setlength{\tabcolsep}{14mm}{ % 因表格过窄，手动设置宽度为7mm
-		\begin{tabular}{lcc}
-			\toprule
-			遮挡程度   & Mask-RCNN mIoU & YOLACT mIoU   \\
-			\midrule
-			无遮挡  & 91.5\% & 86.2\% \\
-			10\%遮挡  & 88.3\% & 80.7\%  \\
-			20\%遮挡 & 84.2\%   &75.1\% \\
-			30\%遮挡  & 79.8\%    &68.4\%\\
-			
-			\bottomrule
-	\end{tabular}}
+	\begin{tabularx}{\textwidth}{YYY}
+		\toprule
+		\textbf{遮挡程度} & \textbf{Mask-RCNN mIoU} & \textbf{YOLACT mIoU} \\
+		\midrule
+		无遮挡 & 91.5\% & 86.2\% \\
+		10\% 遮挡 & 88.3\% & 80.7\% \\
+		20\% 遮挡 & 84.2\% & 75.1\% \\
+		30\% 遮挡 & 79.8\% & 68.4\% \\
+		\bottomrule
+	\end{tabularx}
 	\label{tab:hidden}
 \end{table}
+
 为了进一步评估分割模型在复杂环境中的适应性，我们测试了两种模型在同等光照条件、不同遮挡程度下的分割性能。结果如\cref{tab:hidden}所示。
 
 从结果可以看出，Mask-RCNN 在所有复杂环境下的 mIoU 均高于 YOLACT，尤其在叶片遮挡超过 20\% 的情况下，Mask-RCNN 仍然能够保持 79.8\% 的 mIoU，而 YOLACT 在相同条件下的分割精度下降至 68.4\%，说明 Mask-RCNN 在复杂场景下的鲁棒性更强。
@@ -168,3 +169,6 @@ YOLACT 在授粉任务中的应用主要体现在其优异的实时性。相比�
 在自动化授粉任务中，精准的花朵目标分割是位姿检测的基础，直接影响机械臂的授粉精准度与操作稳定性。本研究围绕Mask-RCNN 和 YOLACT 这两种实例分割方法展开实验，并结合不同光照条件、遮挡情况以及计算效率进行全面评估，以确定适用于花朵位姿检测的最佳目标分割策略。
 
 实验结果表明，Mask-RCNN 具有更高的分割精度，在复杂环境下表现更稳定。Mask-RCNN 能够精准分割花朵轮廓，即使在光照不足、阴影干扰或遮挡情况下，仍能保持较高的 mIoU，适用于对分割精度要求较高的应用场景。然而，Mask-RCNN 的计算开销较大，推理速度较慢，不适合高实时性任务。相比之下，YOLACT在推理速度上远超 Mask-RCNN，在实时性要求较高的场景中更具优势。然而，由于其特征提取能力较弱，在弱光、阴影和背光等复杂环境下，分割精度下降明显，容易出现目标边界模糊或误分割问题。尽管如此，YOLACT 在标准光照条件下仍能提供较稳定的目标分割结果，适用于对计算速度要求更高的场景。
+本章研究为后续三维重建与柔顺控制提供了高质量的花朵掩膜基础，为实现农业场景下的高精度位姿估计与稳定授粉操作奠定了坚实的感知前端支持。
+
+
