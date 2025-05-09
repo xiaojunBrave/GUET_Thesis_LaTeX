@@ -793,7 +793,7 @@
 
 
 % ====================目录深度设置====================
-\setcounter{tocdepth}{2}                             % 设置目录深度
+\setcounter{tocdepth}{3}                             % 设置目录深度
 
 
 % =========================目录样式设置=========================
@@ -1103,7 +1103,7 @@
   \titleformat{\subsubsection}[block]
   {\fontsize{12pt}{12pt}\selectfont}
   {\thesubsubsection}{6pt}{}
-  \renewcommand{\thesubsubsection}{\arabic{subsubsection}.} % 四级标题格式设置为 1.
+ % \renewcommand{\thesubsubsection}{\arabic{subsubsection}.} % 四级标题格式设置为 1.
 }
 
 
@@ -1450,25 +1450,10 @@
     \end{refsection}
     \begin{refsection}[\AchResource]
         \nocite{*}
-        \def\blx@maxbibnames{5}
-        \settoggle{bbx:gbannote}{true}
-        \begin{Achbox}
-          \printbibliography[heading=AchHeadStyle,type=patent,title=发明专利：]
-        \end{Achbox}
-    \end{refsection}
-    \begin{refsection}[\AchResource]
-        \nocite{*}
-        \settoggle{bbx:gbannote}{true}
-        \begin{Achbox}
-          \printbibliography[heading=AchHeadStyle,type=software,title=软件著作权：]
-        \end{Achbox}
-    \end{refsection}
-    \begin{refsection}[\AchResource]
-        \nocite{*}
         \settoggle{bbx:gbtype}{false}
         \settoggle{bbx:gbannote}{true}
         \begin{Achbox}
-          \printbibliography[heading=AchHeadStyle,type=misc,title=科研竞赛获奖：]
+          \printbibliography[heading=AchHeadStyle,type=misc,title=获奖：]
         \end{Achbox}
     \end{refsection}
 }

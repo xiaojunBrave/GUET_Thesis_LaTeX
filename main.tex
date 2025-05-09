@@ -30,14 +30,20 @@
 % ------------------------------------------------------------------------------------------
 %     前言区域
 % ------------------------------------------------------------------------------------------
-
+%\documentclass[master,bversion]{GUET-Thesis} % 盲审版
 \documentclass[master]{GUET-Thesis} 
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+
+% 定义一个居中对齐的等宽列类型 Y
+
 % pversion:打印版 bversion:盲审版 
 % bachelor:本科 master:学硕 promaster:专硕 doctor:博士 ojmaster 在职硕士 ptmaster 非全专硕
 
-% \documentclass[master,bversion]{GUET-Thesis} % 盲审版
+%\documentclass[master,bversion]{GUET-Thesis} % 盲审版
 % \documentclass[master,pversion]{GUET-Thesis} % 打印版
-
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
 % ------------------------------------------------------------------------------------------
 %     资源路径
 % ------------------------------------------------------------------------------------------
@@ -53,6 +59,8 @@
 \ThesisBibResource{./References/reference.bib}                              % 参考文献数据源加载
 \ThesisAchResource{./References/accomplish.bib}           
 \usepackage{placeins}                   % 攻读学位期间取得成果数据源加载
+
+
 
 % ------------------------------------------------------------------------------------------
 %     封面信息
@@ -80,34 +88,33 @@
 
 \begin{document}
     \MakeCover                                                             % 封面
-    \OriginalityDeclaration                                                % 独创性声明
+    %\OriginalityDeclaration                                                % 独创性声明
     % \SignatureDeclaration{./Chapters/独创性声明(示例).pdf}                % 可使用已签字的独创性声明PDF文件
 
     \input{Chapters/Abstract}                                              % 摘要
 
 % ------------------------------------------------------------------------------------------ 
 
-    \ThesisFigureList                                                      % 插图目录
-    \ThesisTableList                                                       % 插表目录
-    \ThesisSymbolList                                                      % 符号说明表
+    %\ThesisFigureList                                                      % 插图目录
+    %\ThesisTableList                                                       % 插表目录
+    %\ThesisSymbolList                                                      % 符号说明表
     \ThesisContents                                                        % 目录
 
 % ------------------------------------------------------------------------------------------
 
-    \input{Chapters/Symbol}                                                % 符号定义文件
-
+    %\input{Chapters/Symbol}                                                % 符号定义文件
     \input{Chapters/Chapter1}
     \input{Chapters/Chapter2_1}
     %\input{Chapters/Chapter2}
     \input{Chapters/Chapter3_1}
     \input{Chapters/Chapter3}
-    \input{Chapters/Chapter4}
-    \input{Chapters/Chapter5}                                              % 可根据需求自行添加章节数
+     \input{Chapters/Chapter4}                   
+    \input{Chapters/Chapter5}    
+                          % 可根据需求自行添加章节数
 
     \input{Chapters/Conclusion}                                            % 总结与展望
     
 % ------------------------------------------------------------------------------------------
-
     \ThesisBibliography                                                    % 参考文献
     \ThesisAcknowledgement                                                 % 致谢
     \ThesisAchievement                                                     % 攻读专业硕士学位期间取得的成果
